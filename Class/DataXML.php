@@ -37,6 +37,10 @@
                 return $books;
             }
         
+            if(isset($pFilter["pagina"])){
+                return array_slice($books, 0, (int)$pFilter['pagina']);
+            }
+
             return array_filter($books, function($book) use ($pFilter) {
                 foreach ($pFilter as $key => $value) {
                     if (!isset($book[$key]) || $book[$key] !== $value) {
