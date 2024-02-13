@@ -1,5 +1,7 @@
 RewriteEngine On
 
+Header set Access-Control-Allow-Origin "*"
+
 #------- Quitar la ext .php de las URL -------#
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.php -f
