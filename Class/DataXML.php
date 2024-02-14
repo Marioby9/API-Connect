@@ -15,8 +15,8 @@
                             'titulo' => (string) $book->title,
                             'genero' => (string) $book->genre,
                             'precio' => (float) $book->price,
-                            'año de publicación' => (string) $book->publish_date,
-                            'descripción' => (string) $book->description,
+                            'lanzamiento' => (string) $book->publish_date,
+                            'descripcion' => (string) $book->description,
                         ];
                      }
                 } catch (Exception $e) {
