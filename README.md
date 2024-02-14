@@ -32,22 +32,23 @@
 
 ## Resumen
 
-Bienvenido a nuestra biblioteca online en PHP, un proyecto diseñado para ofrecer una plataforma eficiente y fácil de usar para gestionar y compartir recursos bibliográficos. En nuestra biblioteca online, los usuarios pueden explorar una amplia variedad de libros, revistas y otros materiales, así como realizar funciones como búsqueda, préstamo y devolución de libros.
+Bienvenido a API-Connect. Es una aplicación realizada en PHP que levanta una API REST a partir de un fichero .xml. Se basa en crear un servicio web realizado con PHP para, posteriormente, consumirlo con una aplicación cliente. 
+El funcionamiento lineal de la aplicación es: Leer un fichero XML, transformarlo a una array de objetos PHP, pasarlo a JSON y levantar la API con los datos obtenidos.
 
 ### Características Principales:
 
-- **Exploración del Catálogo:** Navega a través de nuestra extensa colección de libros y recursos bibliográficos.
-- **Búsqueda Avanzada:** Utiliza funciones de búsqueda avanzada para encontrar rápidamente el material que necesitas por título, autor o categoría.
+- **Lectura de fichero:** Obtén unos datos proporcionados por fichero XML y pásalos a formato JSON.
+- **Transforma datos a JSON:** Utiliza funciones para convertir una estructura de datos PHP a tipo JSON.
 
-- **Gestión de Usuarios:** Regístrate como usuario para acceder a funciones adicionales, como llevar un historial de préstamos y gestionar tus preferencias de lectura.
+- **Gestión de peticiones:** Gestiona el tratamiento de peticiones GET recibidas desde el cliente que consume la API y devuelve los datos solicitados.
 
-- **Sistema de Préstamos:** Solicita y gestiona préstamos de libros de manera fácil y rápida.
+- **Despliegue de API:** Levanta la API REST para que sea utilizable y tratable por distintos clientes.
 
-- **Interfaz Intuitiva:** Una interfaz de usuario amigable que facilita la navegación y el uso de las funcionalidades de la biblioteca.
 
-Este proyecto busca proporcionar una solución robusta para la gestión de bibliotecas online, permitiendo a los administradores agregar nuevos recursos, gestionar usuarios y garantizar una experiencia de usuario fluida.
 
-Siéntete libre de explorar, contribuir y adaptar este proyecto según tus necesidades específicas. ¡Disfruta de tu experiencia en nuestra biblioteca online en PHP!
+Este proyecto busca proporcionar una solución robusta para que el usuario que lo utilice, pueda levantar un servicio web de una manera fácil y rápida. 
+
+Siéntete libre de explorar, contribuir y adaptar este proyecto según tus necesidades específicas. ¡Disfruta de tu experiencia en nuestra API REST PHP!
 
 ## Requisitos previos
 
@@ -108,11 +109,7 @@ Sigue estos pasos para configurar el proyecto en tu entorno local:
    wget https://browscap.org/stream?q=PHP_BrowsCapINI -O C:\xampp\php\extras\browscap.ini
    ```
 
-5. **Ejecución del Script SQL:**
-
-   - Importa el script SQL proporcionado (`script.sql`) en tu herramienta de gestión de bases de datos (por ejemplo, phpMyAdmin) para crear las tablas necesarias y agregar datos de prueba.
-
-6. **Cambio de Ruta del Directorio en .htaccess:**
+5. **Cambio de Ruta del Directorio en .htaccess:**
 
    - Abre o crea el archivo `.htaccess` en la raíz de tu proyecto.
    - Agrega la siguiente línea para cambiar la ruta del directorio del proyecto:
@@ -123,45 +120,36 @@ Sigue estos pasos para configurar el proyecto en tu entorno local:
 
      Asegúrate de modificar `C:\xampp\htdocs\tu_proyecto\ruta\del\directorio` con la ruta correcta hacia tu directorio de proyecto.
 
-7. **Configuración de Variables Globales:**
+6. **Configuración de Variables Globales:**
 
-   - Abre el archivo `configuracion/db.php` y ajusta las variables de conexión a la base de datos según tu configuración local.
-
-     ```php
-     <?php
-     // Archivo: configuracion/db.php
-     const DB_HOST = "localhost";
-     const DB_PUERTO = 3306;
-     const DB_USUARIO = "tu_usuario";
-     const DB_CONTRASENA = "tu_contraseña";
-     const DB_BASEDATOS = "tu_nombre_de_db";
-     ```
-
-   - Abre el archivo `configuracion/general.php` y configura las variables globales según tus necesidades.
+   - Abre el archivo `Config/globalParams.php` y ajusta las variables de acceso al fichero xml de lectura de ficheros.
 
      ```php
      <?php
-     // Archivo: configuracion/general.php
-     require_once "db.php";
-     const BASE_URL = "tudnslocal.com";
+     //PARÁMETROS DE CONFIGURACIÓN GLOBALES
+      const XMLFILE = "./Files/books.xml";
+     ?>
      ```
 
-8. **Reiniciar Apache:**
+   - Abre el archivo `books.php` y configura las importaciones globales según tus necesidades.
+
+     ```php
+     <?php
+      //Importamos la clase Response y la clase User
+      require_once './Class/DataXML.php';
+      require_once './Config/globalParams.php';
+      require_once './Class/Response.inc.php';
+      require_once './Class/Book.inc.php';
+     ```
+
+7. **Reiniciar Apache:**
 
    - Reinicia el servidor Apache desde el panel de control de XAMPP o usando los comandos apropiados para tu sistema.
 
-9. **Acceso al Usuario de Prueba:**
-   - Utiliza el siguiente usuario de prueba para acceder a la aplicación como cliente:
-     - Nombre usuario: `mariomg`
-     - Contraseña: `mariomg`
 
-   - Utiliza el siguiente usuario de prueba para acceder a la aplicación como administrador:
-     - Nombre usuario: `ADMIN`
-     - Contraseña: `ADMIN`
+Ahora deberías poder acceder a tu proyecto a través de [http://tudnslocal.com/books](http://tudnslocal.com/books) en tu navegador. Asegúrate de que las variables en los archivos de configuración estén configuradas correctamente y que las tablas y datos de prueba se hayan creado con éxito.
 
-Ahora deberías poder acceder a tu proyecto a través de [http://tudnslocal.com](http://tudnslocal.com) en tu navegador. Asegúrate de que las variables en los archivos de configuración estén configuradas correctamente y que las tablas y datos de prueba se hayan creado con éxito.
-
-¡Listo! Tu entorno local está configurado para ejecutar el proyecto de página web en PHP con las variables globales personalizadas y datos de prueba. ¡Feliz desarrollo!
+¡Listo! Tu entorno local está configurado para ejecutar el proyecto de API REST en PHP con las variables globales personalizadas y datos de prueba. ¡Feliz desarrollo!
 
 <p align="right">(<a href="#readme-top">Volver arriba</a>)</p>
       
@@ -188,7 +176,7 @@ Distribuido bajo la licencia Apache License 2.0. Consulte `LICENCIA.txt` para ob
 
 Mario Martín Godoy - [@mariomg]() - mmartin.mrmg@gmail.com
 
-Enlace del proyecto: [https://github.com/Marioby9/BookSphere](https://github.com/Marioby9/BookSphere)
+Enlace del proyecto: [https://github.com/Marioby9/API-Connect](https://github.com/Marioby9/API-Connect)
 
 <p align="right">(<a href="#readme-top">Volver arriba</a>)</p>
 
@@ -199,7 +187,6 @@ Enlace del proyecto: [https://github.com/Marioby9/BookSphere](https://github.com
 Utilice este espacio para enumerar los recursos que le resulten útiles y a los que le gustaría dar crédito. ¡He incluido algunos de mis favoritos para comenzar!
 
 - [Elije una licencia de código abierto](https://choosealicense.com)
-- [TailwindCSS](https://tailwindcss.com/)
 - [PHP](https://www.php.net/)
 
 <p align="right">(<a href="#readme-top">Volver arriba</a>)</p>
